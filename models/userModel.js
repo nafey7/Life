@@ -19,7 +19,7 @@ const userSchema = new Schema({
     },
     email: {
         type: String,
-        unique: true,
+        unique: [true, 'Account with this email already exists'],
         required: [true, 'Email is required'],
         validate: [validator.isEmail, 'Enter a valid email']
     },
@@ -27,6 +27,10 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'Password is required'],
         minlength: [8, 'Minimum password length is 8']
+    },
+    role: {
+        type: String,
+        required: [true, 'Role of the user is required']
     },
     event: {
         type: String,
