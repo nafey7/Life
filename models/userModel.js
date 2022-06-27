@@ -5,19 +5,12 @@ const validator = require('validator');
 
 
 const userSchema = new Schema({
-    firstName: {
+    firstAndLastName: {
         type: String,
-        required: [true, 'First Name is required'],
-        validate: [validator.isAlpha, 'Name must contain only letters']
+        required: [true, 'First Name is required']
 
     },
-    lastName: {
-        type: String,
-        required: [true, 'Last Name is required'],
-        validate: [validator.isAlpha, 'Name must contain only letters']
-
-    },
-    email: {
+    emailAddress: {
         type: String,
         unique: [true, 'Account with this email already exists'],
         required: [true, 'Email is required'],
@@ -28,17 +21,20 @@ const userSchema = new Schema({
         required: [true, 'Password is required'],
         minlength: [8, 'Minimum password length is 8']
     },
-    role: {
+    userType: {
         type: String,
         required: [true, 'Role of the user is required']
     },
-    event: {
+    eventID: {
         type: String,
         required: [true, 'Event is required']
     },
     feeling: {
         type: String,
         required: [true, 'Feeling is required']
+    },
+    promotionalOffersAndUpdates: {
+        type: Boolean
     }
 },
  {
@@ -46,14 +42,6 @@ const userSchema = new Schema({
 }
 
 );
-
-// userSchema.pre('save', async function(next){
-//     if (this.isModified('password')){
-//         this.password = await bcrypt.hash(this.password, 12);
-//         this.passwordConfirm = undefined;
-//         next();
-//     }
-// })
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -4,25 +4,15 @@ const validator = require('validator');
 
 
 const eventSchema = new Schema({
-    name: {
-        type: String,
-        required: [true, 'Name of Event is required'],
-        validate: [validator.isAlpha, 'Name must contain only letters']
 
-    },
-    type: {
+    eventName: {
         type: String,
-        required: [true, 'Type of Event is required'],
-        validate: [validator.isAlpha, 'Name must contain only letters']
-
+        unique: [true, 'Event Names should be unique'],
+        required: [true, 'Event Name is required']
     },
-    status: {
-        type: String,
-        required: [true, 'Status of Event is required']
-    },
-    userID: {
-        type: String,
-        required: [true, 'User ID as Foreign key is required'],
+    eventImage: {
+        type: Buffer,
+        required: [true, 'Event Image is required']
     }
 },
  {

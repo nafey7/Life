@@ -13,6 +13,8 @@ router
 .route('/login')
 .post(controller.Login);
 
+router.route('/reg').post(controller.Reg);
+
 // Event Create
 // router
 // .route('/event')

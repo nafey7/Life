@@ -2,49 +2,33 @@ const nodemailer = require("nodemailer");
 const pbkdf2 = require('pbkdf2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+const Registry = require('../models/registryModel');
 const Event = require('../models/eventModel');
 
 // Signup
 exports.CreateRegistry = async (req,res,next) => {
     try{
+        console.log(req.body);
         const query = User.create({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'),
-            role: req.body.role,
-            event: req.body.event,
-            feeling: req.body.feeling
+            firstAndLastName: req.body.registration.firstAndLastName,
+            emailAddress: req.body.registration.emailAddress,
+            password: pbkdf2.pbkdf2Sync(req.body.registration.password, 'life-secret', 1, 32, 'sha512'),
+            userType: req.body.registration.userType,
+            eventID: req.body.registration.eventID,
+            feeling: req.body.registration.feeling,
+            promotionalOffersAndUpdates: req.body.registration.promotionalOffersAndUpdates
         });
 
         const CreateRegistry = await query;
+        console.log(typeof(CreateRegistry.createdAt));
         next();
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: 'fail', message: err.message});
+        res.status(404).json({status: '404', message: 'fail'});
     }
 }
 
-// exports.EventatSignup = async (req,res,next) => {
-//     try{
-//         const query = User.findOne({email: req.body.email});
-//         const FindUser = await query;
-
-//         const userID = FindUser._id.toString()
-
-//         const queryTwo = Event.create({
-//             name: req.body
-//         })
-
-//         // console.log("This is the result:",userID);
-//         res.send('success');
-//     }
-//     catch(err){
-//         console.log(err);
-//         res.send('error');
-//     }
-// }
 
 // Email Verification at Signup
 exports.VerifyEmail = async (req,res,next) => {
@@ -60,7 +44,7 @@ exports.VerifyEmail = async (req,res,next) => {
           
           let mailOptions = {
             from: process.env.EMAIL,
-            to: req.body.email,
+            to: req.body.registration.emailAddress,
             subject: 'Welcome to Life',
             html: `<p>Enter the following pin for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/">Click Here</a></button>`
           };
@@ -75,25 +59,46 @@ exports.VerifyEmail = async (req,res,next) => {
             }
           });
 
-          const query = User.findOne({email: req.body.email});
+          const query = User.findOne({emailAddress: req.body.registration.emailAddress});
           const data = await query;
 
-          res.status(200).json({status: 'success', message: data})
+          res.status(201).json({status: '201', message: 'success'})
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: 'fail', message: err.message})
+        res.status(404).json({status: '404', message: 'fail'})
     }
 }
 
+// Registry created at Signup
+exports.Reg = async (req,res) => {
+    try{
+
+        const query = Registry.create({
+            userID: req.body.userID,
+            eventID: req.body.eventID,
+            publicAndPrivacyInd: req.body.publicAndPrivacyInd
+        })
+        const CreateUser = await query;
+        console.log(CreateUser);
+        res.send('success')
+
+    }
+    catch(err){
+        res.send('fail')
+    }
+}
+
+
+// Login
 exports.Login = async (req,res) => {
     try{
 
-        if(!req.body.email || !req.body.password){
+        if(!req.body.emailAddress || !req.body.password){
             throw new Error ('Please enter an email or password');
         }
 
-        const query = User.findOne({email: req.body.email, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')});
+        const query = User.findOne({jsAddress: req.body.emailAddress, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')});
         const FindUser = await query;
 
         if (!FindUser){
@@ -105,5 +110,19 @@ exports.Login = async (req,res) => {
     catch(err){
         console.log(err);
         res.status(404).json({status: 'fail', message: err.message})
+    }
+}
+
+// Get List of Events
+exports.GetEvents = async (req,res) => {
+    try{
+        const query = Event.find();
+        const getEvents = await query;
+
+        res.status(200).json({status: '200', message: 'success', data: getEvents});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: "404", message: 'fail'});
     }
 }
