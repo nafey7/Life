@@ -1,19 +1,19 @@
 {
 	"info": {
 		"_postman_id": "1ae52575-29a9-4111-a6db-28800d649edb",
-		"name": "Project: Life",
+		"name": "LIFE",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "21263830"
 	},
 	"item": [
 		{
-			"name": "Create Registry",
+			"name": "Signup",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"firstName\": \"Moiz\",\n    \"lastName\": \"Nafey\",\n    \"email\": \"nafeymoiz@gmail.com\",\n    \"password\": \"abcd1234\",\n    \"role\": \"registry\",\n    \"event\": \"Birth\",\n    \"feeling\": \"Just exploring\"\n\n}",
+					"raw": "{\n    \"registration\": {\n        \"firstAndLastName\": \"Moiz Nafey\",\n        \"emailAddress\": \"nafeymoiz@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"userType\": \"registry\",\n        \"eventID\": \"Birth\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n        }\n\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:7000/user/registry",
+					"raw": "http://localhost:7000/user/signup",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -29,65 +29,7 @@
 					"port": "7000",
 					"path": [
 						"user",
-						"registry"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Email Verify",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"nafeymoiz@gmail.com\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7000/user/email",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"email"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create Event at Signup",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"nafeymoiz@gmail.com\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7000/user/event",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"event"
+						"signup"
 					]
 				}
 			},
@@ -117,6 +59,55 @@
 					"path": [
 						"user",
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventName\": \"Loss of Income\",\n    \"eventImage\": \"Loss of Income.jpg\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/user/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Events",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:7000/user/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"event"
 					]
 				}
 			},
