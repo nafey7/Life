@@ -11,7 +11,8 @@ const eventSchema = new Schema({
         required: [true, 'Event Name is required']
     },
     eventImage: {
-        type: Buffer,
+        type: String,
+        unique: [true, 'Event Image should be unique'],
         required: [true, 'Event Image is required']
     }
 },

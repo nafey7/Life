@@ -6,9 +6,8 @@ const Registry = require('../models/registryModel');
 const Event = require('../models/eventModel');
 
 // Signup
-exports.CreateRegistry = async (req,res,next) => {
+exports.Signup = async (req,res,next) => {
     try{
-        console.log(req.body);
         const query = User.create({
             firstAndLastName: req.body.registration.firstAndLastName,
             emailAddress: req.body.registration.emailAddress,
@@ -19,8 +18,19 @@ exports.CreateRegistry = async (req,res,next) => {
             promotionalOffersAndUpdates: req.body.registration.promotionalOffersAndUpdates
         });
 
-        const CreateRegistry = await query;
-        console.log(typeof(CreateRegistry.createdAt));
+        const Signup = await query;
+        console.log('This is the ID of the User',Signup._id.toString());
+
+        const userID = Signup._id.toString();
+        const eventID = req.body.registration.eventID.toString();
+
+        const secondQuery = Registry.create({
+            userID: userID,
+            eventID: eventID,
+            publicAndPrivacyInd: 'private' //by default private hoga at signup
+        })
+        const CreateRegistry = await secondQuery;
+
         next();
     }
     catch(err){
@@ -70,24 +80,6 @@ exports.VerifyEmail = async (req,res,next) => {
     }
 }
 
-// Registry created at Signup
-exports.Reg = async (req,res) => {
-    try{
-
-        const query = Registry.create({
-            userID: req.body.userID,
-            eventID: req.body.eventID,
-            publicAndPrivacyInd: req.body.publicAndPrivacyInd
-        })
-        const CreateUser = await query;
-        console.log(CreateUser);
-        res.send('success')
-
-    }
-    catch(err){
-        res.send('fail')
-    }
-}
 
 
 // Login
@@ -113,6 +105,8 @@ exports.Login = async (req,res) => {
     }
 }
 
+
+
 // Get List of Events
 exports.GetEvents = async (req,res) => {
     try{
@@ -124,5 +118,21 @@ exports.GetEvents = async (req,res) => {
     catch(err){
         console.log(err);
         res.status(404).json({status: "404", message: 'fail'});
+    }
+}
+
+exports.AddEvent = async (req,res) => {
+    try{
+        
+        const query = Event.create({
+            eventName: req.body.eventName,
+            eventImage: req.body.eventImage
+        })
+        const addEvent = await query;
+        res.status(201).json({status:'201', message: 'success'});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail'});
     }
 }

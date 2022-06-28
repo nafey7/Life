@@ -3,21 +3,22 @@ const controller = require('../controllers/userController');
 
 const router = express.Router();
 
-// Signup User
+// USER-SIGNUP
 router
-.route('/registry')
-.post(controller.CreateRegistry,controller.VerifyEmail);
+.route('/signup')
+.post(controller.Signup,controller.VerifyEmail);
 
-// Login
+// USER-LOGIN
 router
 .route('/login')
 .post(controller.Login);
 
-router.route('/reg').post(controller.Reg);
+// Get List of Events & Add Event
+router
+.route('/event')
+.post(controller.AddEvent) // post request for adding an event
+.get(controller.GetEvents); // get request to get all events
 
-// Event Create
-// router
-// .route('/event')
-// .post(controller.EventatSignup)
+
 
 module.exports = router;
