@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRoute = require('./routes/userRoute');
-
+const eventRoute = require('./routes/eventRoute')
 
 const app = express();
 // app.use(cors(corsOptions));
@@ -33,6 +33,7 @@ app.use((req,res,next) => {
 });
 
 app.use('/user', userRoute);
+app.use('/event', eventRoute);
 
 
 const port = process.env.PORT;

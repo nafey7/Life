@@ -79,14 +79,13 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:7000/user/event",
+					"raw": "http://localhost:7000/event",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "7000",
 					"path": [
-						"user",
 						"event"
 					]
 				}
@@ -99,7 +98,38 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:7000/user/event",
+					"raw": "http://localhost:7000/event",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"event"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Registries",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userID\": \"62ba9db2b4fdd496f9652d44\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/user/registries",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -107,7 +137,65 @@
 					"port": "7000",
 					"path": [
 						"user",
-						"event"
+						"registries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Registry",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \n   \"userID\": \"62ba9db2b4fdd496f9652d44\",\n    \"eventID\": \"Marriage\",\n    \"publicAndPrivacyInd\": \"private\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/user/registries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"registries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Registry",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"62bd23c4dac4bdfabcccfb9f\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:7000/user/registries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "7000",
+					"path": [
+						"user",
+						"registries"
 					]
 				}
 			},

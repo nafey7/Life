@@ -3,7 +3,6 @@ const pbkdf2 = require('pbkdf2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Registry = require('../models/registryModel');
-const Event = require('../models/eventModel');
 
 // Signup
 exports.Signup = async (req,res,next) => {
@@ -106,33 +105,55 @@ exports.Login = async (req,res) => {
 }
 
 
+// REGISTRIES
 
-// Get List of Events
-exports.GetEvents = async (req,res) => {
+// View All Registries for a user
+exports.ViewRegistries = async (req,res) => {
     try{
-        const query = Event.find();
-        const getEvents = await query;
-
-        res.status(200).json({status: '200', message: 'success', data: getEvents});
+        // later get user ID through verifying from the token
+        const filter = {userID: req.body.userID};
+        const query = Registry.find(filter);
+        const viewRegistries = await query;
+        res.status(200).json({status:'200', message: 'success', data: viewRegistries});
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: "404", message: 'fail'});
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
     }
 }
 
-exports.AddEvent = async (req,res) => {
+// Add a Registry
+exports.AddRegistry = async (req,res) => {
     try{
-        
-        const query = Event.create({
-            eventName: req.body.eventName,
-            eventImage: req.body.eventImage
-        })
-        const addEvent = await query;
-        res.status(201).json({status:'201', message: 'success'});
+
+        const query = Registry.create({
+            userID:req.body.userID,
+            eventID: req.body.eventID,
+            publicAndPrivacyInd: 'private'
+        });
+
+        const addRegistry = await query;
+
+        res.status(201).json({status: '201', message: 'success', data: addRegistry});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
+
+    }
+}
+
+// Delete Registry
+exports.DeleteRegistry = async(req,res) => {
+    try{
+        const query = Registry.findByIdAndDelete(req.body.id);
+        const deleteRegistry = await query;
+
+        res.status(200).json({status: '200', message: 'success'});
     }
     catch(err){
         console.log(err);
         res.status(404).json({status: '404', message: 'fail'});
     }
 }
+
