@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const userRoute = require('./routes/userRoute');
-const eventRoute = require('./routes/eventRoute')
+const eventRoute = require('./routes/eventRoute');
+const registryRoute = require('./routes/registryRoute');
 
 const app = express();
 // app.use(cors(corsOptions));
@@ -34,7 +35,7 @@ app.use((req,res,next) => {
 
 app.use('/user', userRoute);
 app.use('/event', eventRoute);
-
+app.use('/registry', registryRoute);
 
 const port = process.env.PORT;
 app.listen(port, ()=> {

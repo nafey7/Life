@@ -4,42 +4,53 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Registry = require('../models/registryModel');
 
-// Signup
+// USER SIGNUP
 exports.Signup = async (req,res,next) => {
     try{
         const query = User.create({
-            firstAndLastName: req.body.registration.firstAndLastName,
+            name: req.body.registration.name,
             emailAddress: req.body.registration.emailAddress,
             password: pbkdf2.pbkdf2Sync(req.body.registration.password, 'life-secret', 1, 32, 'sha512'),
-            userType: req.body.registration.userType,
+            image: req.body.registration.image,
             eventID: req.body.registration.eventID,
             feeling: req.body.registration.feeling,
             promotionalOffersAndUpdates: req.body.registration.promotionalOffersAndUpdates
         });
 
         const Signup = await query;
-        console.log('This is the ID of the User',Signup._id.toString());
 
         const userID = Signup._id.toString();
         const eventID = req.body.registration.eventID.toString();
 
         const secondQuery = Registry.create({
+            registryName: req.body.registration.registryName,
             userID: userID,
+            link: 'none',
             eventID: eventID,
-            publicAndPrivacyInd: 'private' //by default private hoga at signup
+            private: true //by default private hoga at signup
         })
         const CreateRegistry = await secondQuery;
+        const registryID = CreateRegistry._id.toString();
+
+        const newLink = 'http://localhost:7000/registry/private/view/' + registryID;
+        const filter = {_id: registryID};
+        const update = {link: newLink};
+
+        const thirdQuery = Registry.updateMany(filter, update, {new: true, runValidators: true});
+        const updateLink = await thirdQuery;
+
+
 
         next();
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: '404', message: 'fail'});
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
     }
 }
 
 
-// Email Verification at Signup
+// EMAIL VERIFY AT USER SIGNUP
 exports.VerifyEmail = async (req,res,next) => {
     try{
         
@@ -55,7 +66,7 @@ exports.VerifyEmail = async (req,res,next) => {
             from: process.env.EMAIL,
             to: req.body.registration.emailAddress,
             subject: 'Welcome to Life',
-            html: `<p>Enter the following pin for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/">Click Here</a></button>`
+            html: `<p>Click the following link for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/profile">Click Here</a></button>`
           };
           
           await transporter.sendMail(mailOptions, function(error, info){
@@ -71,6 +82,8 @@ exports.VerifyEmail = async (req,res,next) => {
           const query = User.findOne({emailAddress: req.body.registration.emailAddress});
           const data = await query;
 
+        //   const token = jwt.sign({id: data._id}, 'project-life');
+
           res.status(201).json({status: '201', message: 'success'})
     }
     catch(err){
@@ -81,13 +94,15 @@ exports.VerifyEmail = async (req,res,next) => {
 
 
 
-// Login
+// USER LOGIN
 exports.Login = async (req,res) => {
     try{
 
         if(!req.body.emailAddress || !req.body.password){
             throw new Error ('Please enter an email or password');
         }
+        
+        // console.log('This is email', req.body.emailAddress, 'and this is password', pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'));
 
         const query = User.findOne({jsAddress: req.body.emailAddress, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')});
         const FindUser = await query;
@@ -95,8 +110,9 @@ exports.Login = async (req,res) => {
         if (!FindUser){
             throw new Error('Email or Password is incorrect');
         }
+        const token = jwt.sign({id: FindUser._id}, 'life-secret');
 
-        res.status(200).json({status: 'success', message: FindUser});
+        res.status(200).json({status: 'success', token: token, message: FindUser});
     }
     catch(err){
         console.log(err);
@@ -104,10 +120,42 @@ exports.Login = async (req,res) => {
     }
 }
 
+// USER CAN CHANGE PROFILE IMAGE
+exports.ChangeProfileImage = async (req,res) => {
+    try{
+        const update = {image: req.body.image};
+        const filter = {_id: req.body.id};
 
-// REGISTRIES
+        const query = User.updateMany(filter, update, {new: true, runValidators: true});
+        const changeImage = await query;
+        res.status(200).json({status: '200', message: 'success', data: changeImage});
 
-// View All Registries for a user
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
+    }
+}
+
+
+// REGISTRIES (related to the user)
+
+// User can view one particular registry
+// In future probably, the response will also contain the services present in the registry.
+exports.SpecificRegistry = async (req,res) => {
+    try{
+        const registryID = req.body.registryID;
+        const query = Registry.findById(registryID);
+        const findRegistry = await query;
+
+        res.status(200).json({status: '200', message: 'success', data: findRegistry});
+    }
+    catch(err){
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
+    }
+}
+
+// User can view their all registries
 exports.ViewRegistries = async (req,res) => {
     try{
         // later get user ID through verifying from the token
@@ -122,14 +170,15 @@ exports.ViewRegistries = async (req,res) => {
     }
 }
 
-// Add a Registry
+// User will add a registry
 exports.AddRegistry = async (req,res) => {
     try{
 
         const query = Registry.create({
+            registryName: req.body.registryName,
             userID:req.body.userID,
             eventID: req.body.eventID,
-            publicAndPrivacyInd: 'private'
+            private: true
         });
 
         const addRegistry = await query;
@@ -143,10 +192,10 @@ exports.AddRegistry = async (req,res) => {
     }
 }
 
-// Delete Registry
+// User will delete a registry
 exports.DeleteRegistry = async(req,res) => {
     try{
-        const query = Registry.findByIdAndDelete(req.body.id);
+        const query = Registry.findByIdAndDelete(req.body.registryID);
         const deleteRegistry = await query;
 
         res.status(200).json({status: '200', message: 'success'});
@@ -157,3 +206,39 @@ exports.DeleteRegistry = async(req,res) => {
     }
 }
 
+// User will edit privacy status of the registry
+exports.ChangePrivacy = async (req,res) => {
+    try{
+        const filter = {_id: req.body.registryID};
+        const update = {private: req.body.private};
+
+        const query = Registry.updateMany(filter, update, {new: true, runValidators: true});
+        const changePrivacy = await query;
+        res.status(200).json({status: '200', message: 'success', data: changePrivacy});
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
+    }
+}
+
+// User can generate a link of a Private Registry
+
+exports.GenerateLink = async (req,res) => {
+    try {
+        // .select('-_id link')
+        const query = Registry.findById(req.body.registryID);
+        const registryLink = await query;
+
+        if (registryLink.private == false){
+            throw new Error('The Registry should be private to generate a link');
+        }
+
+        res.status(200).json({status: '200', message: 'success', data: {link: registryLink.link}});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
+    }
+}

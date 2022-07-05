@@ -5,14 +5,16 @@ const validator = require('validator');
 
 
 const userSchema = new Schema({
-    firstAndLastName: {
+    name: {
         type: String,
-        required: [true, 'First Name is required']
+        required: [true, 'Name is required']
 
     },
     emailAddress: {
         type: String,
         unique: [true, 'Account with this email already exists'],
+        sparse: true,
+        autoIndexId: false,
         required: [true, 'Email is required'],
         validate: [validator.isEmail, 'Enter a valid email']
     },
@@ -21,7 +23,7 @@ const userSchema = new Schema({
         required: [true, 'Password is required'],
         minlength: [8, 'Minimum password length is 8']
     },
-    userType: {
+    image: {
         type: String,
         required: [true, 'Role of the user is required']
     },
