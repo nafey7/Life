@@ -19,8 +19,8 @@ exports.Signup = async (req,res,next) => {
 
         const Signup = await query;
 
-        const userID = Signup._id.toString();
-        const eventID = req.body.registration.eventID.toString();
+        const userID = Signup._id;
+        const eventID = req.body.registration.eventID;
 
         const secondQuery = Registry.create({
             registryName: req.body.registration.registryName,
@@ -30,7 +30,7 @@ exports.Signup = async (req,res,next) => {
             private: true //by default private hoga at signup
         })
         const CreateRegistry = await secondQuery;
-        const registryID = CreateRegistry._id.toString();
+        const registryID = CreateRegistry._id;
 
         const newLink = 'http://localhost:7000/registry/private/view/' + registryID;
         const filter = {_id: registryID};
@@ -124,7 +124,7 @@ exports.Login = async (req,res) => {
 exports.ChangeProfileImage = async (req,res) => {
     try{
         const update = {image: req.body.image};
-        const filter = {_id: req.body.id};
+        const filter = {_id: req.body.userID};
 
         const query = User.updateMany(filter, update, {new: true, runValidators: true});
         const changeImage = await query;
@@ -178,12 +178,21 @@ exports.AddRegistry = async (req,res) => {
             registryName: req.body.registryName,
             userID:req.body.userID,
             eventID: req.body.eventID,
+            link: 'none',
             private: true
         });
 
         const addRegistry = await query;
+        const registryID = addRegistry._id
+        const filter = {_id: registryID};
+        const newLink = 'http://localhost:7000/registry/private/view/' + registryID;
+        const update = {link: newLink};
 
-        res.status(201).json({status: '201', message: 'success', data: addRegistry});
+        const secondQuery = Registry.updateOne(filter, update, {new: true, runValidators: true});
+        const updateRegistry = await secondQuery;
+
+
+        res.status(201).json({status: '201', message: 'success', data: updateRegistry});
     }
     catch(err){
         console.log(err);

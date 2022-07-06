@@ -7,199 +7,423 @@
 	},
 	"item": [
 		{
-			"name": "Signup",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"registration\": {\n        \"firstAndLastName\": \"Moiz Nafey\",\n        \"emailAddress\": \"nafeymoiz@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"userType\": \"registry\",\n        \"eventID\": \"Birth\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n        }\n\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "USER",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registration\": {\n        \"name\": \"Test User\",\n        \"emailAddress\": \"nafeymoiz@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"image\": \"user.png\",\n        \"eventID\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false,\n        \"registryName\": \"New Registry\"\n        }\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"signup"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:7000/user/signup",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"signup"
-					]
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\": \"nafeymoiz@gmail.com\",\n    \"password\": \"abcd1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View User's Registries",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/registries",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"registries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User's Registry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \n    \"registryName\": \"Test Registry\",\n    \"eventID\": \"Marriage\",\n    \"private\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/registries",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"registries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User's Registry",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registryID\": \"62c5086d3b2100fb0bc8f8f6\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n    \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/registries",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"registries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Profile Image",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"image\":\"hello.png\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/changeImage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"changeImage"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Registry Privacy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registryID\": \"62c428862f37b59474edee9e\",\n    \"private\" : \"true\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/registryPrivacy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"registryPrivacy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Open Single Registry",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registryID\" : \"62c428862f37b59474edee9e\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/specificRegistry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"specificRegistry"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Link of Registry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registryID\": \"62c428862f37b59474edee9e\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/registryLink",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"registryLink"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Login",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"nafeymoiz@gmail.com\",\n    \"password\": \"abcd1234\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "REGISTRY",
+			"item": [
+				{
+					"name": "View All Registries (Public)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/registry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"registry"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:7000/user/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"login"
-					]
+				{
+					"name": "Search Public Registry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"searchName\": \"New Registry\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/registry/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"registry",
+								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Private Registry to 3rd party",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"registryID\" : \"62c18f257078ffbed15808b9\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/registry/private/registry",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"registry",
+								"private",
+								"registry"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Add Event",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"eventName\": \"Loss of Income\",\n    \"eventImage\": \"Loss of Income.jpg\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "EVENT",
+			"item": [
+				{
+					"name": "Add Event",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"eventName\": \"Loss of Income\",\n    \"eventImage\": \"Loss of Income.jpg\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"event"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:7000/event",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"event"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Events",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:7000/event",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"event"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "View Registries",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"userID\": \"62ba9db2b4fdd496f9652d44\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Get Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:7000/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"event"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7000/user/registries",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"registries"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Registry",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{  \n   \"userID\": \"62ba9db2b4fdd496f9652d44\",\n    \"eventID\": \"Marriage\",\n    \"publicAndPrivacyInd\": \"private\" \n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7000/user/registries",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"registries"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete Registry",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"id\": \"62bd23c4dac4bdfabcccfb9f\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:7000/user/registries",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "7000",
-					"path": [
-						"user",
-						"registries"
-					]
-				}
-			},
-			"response": []
+			]
 		}
 	]
 }

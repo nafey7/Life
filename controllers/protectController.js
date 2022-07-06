@@ -11,16 +11,20 @@ exports.Protect = async (req,res, next) => {
         token = req.body.token
 
         const match = await jwt.verify (token, 'life-secret');
+        const userID = match.id;
         
-        const query = User.findById(match.id);
+        const query = User.findById(userID);
         const UserFound = await query;
 
+        
         if (!UserFound){
             throw new Error ('No such user exists');
         }
 
-        // next();
-        res.status(200).json({status: '200', message: 'success'})
+        req.body.userID = userID;
+
+        next();
+        // res.status(200).json({status: '200', message: 'success'});
 
 
 

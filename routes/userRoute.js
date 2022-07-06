@@ -6,10 +6,6 @@ const protectController = require('../controllers/protectController');
 const router = express.Router();
 
 
-router
-.route('/check')
-.post(protectController.Protect);
-
 // USER-SIGNUP
 router
 .route('/signup')
@@ -23,30 +19,30 @@ router
 // CHANGE PROFILE IMAGE
 router
 .route('/changeImage')
-.patch(controller.ChangeProfileImage);
+.patch(protectController.Protect,controller.ChangeProfileImage);
 
 
 // VIEW & ADD & DELETE REGISTRY
 router
 .route('/registries')
-.get(controller.ViewRegistries)
-.post(controller.AddRegistry)
-.delete(controller.DeleteRegistry);
+.get(protectController.Protect,controller.ViewRegistries)
+.post(protectController.Protect,controller.AddRegistry)
+.delete(protectController.Protect,controller.DeleteRegistry);
 
 // VIEW SINGLE SPECIFIC REGISTRY
 router
 .route('/specificRegistry')
-.get(controller.SpecificRegistry);
+.get(protectController.Protect,controller.SpecificRegistry);
 
 // GENERATE LINK OF REGISTRY
 router
 .route('/registryLink')
-.post(controller.GenerateLink);
+.post(protectController.Protect,controller.GenerateLink);
 
 // CHANGE PRIVACY OF REGISTRY
 router
 .route('/registryPrivacy')
-.patch(controller.ChangePrivacy);
+.patch(protectController.Protect,controller.ChangePrivacy);
 
 
 module.exports = router;
