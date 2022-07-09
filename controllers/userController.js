@@ -8,22 +8,22 @@ const Registry = require('../models/registryModel');
 exports.Signup = async (req,res,next) => {
     try{
         const query = User.create({
-            name: req.body.registration.name,
-            emailAddress: req.body.registration.emailAddress,
-            password: pbkdf2.pbkdf2Sync(req.body.registration.password, 'life-secret', 1, 32, 'sha512'),
-            image: req.body.registration.image,
-            eventID: req.body.registration.eventID,
-            feeling: req.body.registration.feeling,
-            promotionalOffersAndUpdates: req.body.registration.promotionalOffersAndUpdates
+            name: req.body.name,
+            emailAddress: req.body.emailAddress,
+            password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'),
+            image: req.body.image,
+            eventID: req.body.eventID,
+            feeling: req.body.feeling,
+            promotionalOffersAndUpdates: req.body.promotionalOffersAndUpdates
         });
 
         const Signup = await query;
 
         const userID = Signup._id;
-        const eventID = req.body.registration.eventID;
+        const eventID = req.body.eventID;
 
         const secondQuery = Registry.create({
-            registryName: req.body.registration.registryName,
+            registryName: req.body.registryName,
             userID: userID,
             link: 'none',
             eventID: eventID,
@@ -64,7 +64,7 @@ exports.VerifyEmail = async (req,res,next) => {
           
           let mailOptions = {
             from: process.env.EMAIL,
-            to: req.body.registration.emailAddress,
+            to: req.body.emailAddress,
             subject: 'Welcome to Life',
             html: `<p>Click the following link for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/profile">Click Here</a></button>`
           };
@@ -79,12 +79,13 @@ exports.VerifyEmail = async (req,res,next) => {
             }
           });
 
-          const query = User.findOne({emailAddress: req.body.registration.emailAddress});
+          const query = User.findOne({emailAddress: req.body.emailAddress});
           const data = await query;
+          const token = jwt.sign({id: data._id}, 'life-secret');
 
         //   const token = jwt.sign({id: data._id}, 'project-life');
 
-          res.status(201).json({status: '201', message: 'success'})
+          res.status(201).json({status: '201', message: 'success', token: token, data: data});
     }
     catch(err){
         console.log(err);

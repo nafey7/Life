@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"registration\": {\n        \"name\": \"Test User\",\n        \"emailAddress\": \"nafeymoiz@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"image\": \"user.png\",\n        \"eventID\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false,\n        \"registryName\": \"New Registry\"\n        }\n\n}",
+							"raw": "{\n        \"name\": \"Test User\",\n        \"emailAddress\": \"nafeymoiz@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"image\": \"user.png\",\n        \"eventID\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false,\n        \"registryName\": \"New Registry\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
