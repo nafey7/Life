@@ -37,6 +37,10 @@ app.use('/user', userRoute);
 app.use('/event', eventRoute);
 app.use('/registry', registryRoute);
 
+app.get('/api/event', (req, res) => {
+    res.send("success");
+});
+
 const port = process.env.PORT;
 app.listen(port, ()=> {
     console.log("App is running on port:",port);
