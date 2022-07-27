@@ -4,10 +4,11 @@ const Event = require('../models/eventModel');
 // Get List of Events
 exports.GetEvents = async (req,res) => {
     try{
-        const query = Event.find();
-        const getEvents = await query;
+        res.send('done successfully')
+        // const query = Event.find();
+        // const getEvents = await query;
 
-        res.status(200).json({status: '200', message: 'success', data: getEvents});
+        // res.status(200).json({status: '200', message: 'success', data: getEvents});
     }
     catch(err){
         console.log(err);
