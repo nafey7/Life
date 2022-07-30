@@ -105,7 +105,7 @@ exports.Login = async (req,res) => {
         
         // console.log('This is email', req.body.emailAddress, 'and this is password', pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'));
 
-        const query = User.findOne({jsAddress: req.body.emailAddress, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')});
+        const query = User.findOne({emailAddress: req.body.emailAddress, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')});
         const FindUser = await query;
 
         if (!FindUser){

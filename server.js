@@ -16,8 +16,6 @@ const app = express();
 //     origin: process.env.ORIGIN,
 // }
 
-const dbURI = 'mongodb+srv://life:abcd1234@cluster0.bwyve.mongodb.net/DB?retryWrites=true&w=majority';
-
 mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("Sucessfully connected to Database"))
     .catch((err) => console.log(err));
@@ -37,9 +35,6 @@ app.use('/user', userRoute);
 app.use('/event', eventRoute);
 app.use('/registry', registryRoute);
 
-app.get('/api/event', (req, res) => {
-    res.send("success");
-});
 
 const port = process.env.PORT;
 app.listen(port, ()=> {
