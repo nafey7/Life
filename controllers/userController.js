@@ -81,11 +81,19 @@ exports.VerifyEmail = async (req,res,next) => {
 
           const query = User.findOne({emailAddress: req.body.emailAddress});
           const data = await query;
+
+          const secondQuery = Registry.find({userID: data._id});
+          const secondData = await secondQuery;
+
+          const finalData = {user: data, registry: secondData};
+
           const token = jwt.sign({id: data._id}, 'life-secret');
+
+
 
         //   const token = jwt.sign({id: data._id}, 'project-life');
 
-          res.status(201).json({status: '201', message: 'success', token: token, data: data});
+          res.status(201).json({status: '201', message: 'success', token: token, data: finalData});
     }
     catch(err){
         console.log(err);

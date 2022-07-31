@@ -10,11 +10,12 @@ const eventRoute = require('./routes/eventRoute');
 const registryRoute = require('./routes/registryRoute');
 
 const app = express();
-// app.use(cors(corsOptions));
 
-// var corsOptions = {
-//     origin: process.env.ORIGIN,
-// }
+app.use(cors(corsOptions));
+
+var corsOptions = {
+    origin: process.env.ORIGIN,
+}
 
 mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("Sucessfully connected to Database"))

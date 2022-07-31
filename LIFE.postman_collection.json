@@ -77,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -106,7 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{  \n    \"registryName\": \"Test Registry\",\n    \"eventID\": \"Marriage\",\n    \"private\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"raw": "{  \n    \"registryName\": \"Test Registry 3\",\n    \"eventID\": \"Marriage\",\n    \"private\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -135,7 +135,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"registryID\": \"62c5086d3b2100fb0bc8f8f6\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n    \n}",
+							"raw": "{\n    \"registryID\": \"62e28256ca8d7c4519f38ca0\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n    \n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -164,7 +164,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"image\":\"hello.png\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"raw": "{\n    \"image\":\"hello.png\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -193,7 +193,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"registryID\": \"62c428862f37b59474edee9e\",\n    \"private\" : \"true\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n\n}",
+							"raw": "{\n    \"registryID\": \"62e2825cca8d7c4519f38ca4\",\n    \"private\" : \"false\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -225,7 +225,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"registryID\" : \"62c428862f37b59474edee9e\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"raw": "{\n    \"registryID\" : \"62e2825cca8d7c4519f38ca4\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -254,7 +254,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"registryID\": \"62c428862f37b59474edee9e\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYzQyODg1MmYzN2I1OTQ3NGVkZWU5YyIsImlhdCI6MTY1NzA3OTgyN30.vgvl0wD-PO42M1ZwiFfDaCX5BuCPFIJti-O8eaUAXnM\"\n}",
+							"raw": "{\n    \"registryID\": \"62e28226ca8d7c4519f38c9c\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -319,7 +319,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"searchName\": \"New Registry\"\n}",
+							"raw": "{\n    \"searchName\": \"Test Registry 3\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -348,7 +348,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"registryID\" : \"62c18f257078ffbed15808b9\"\n}",
+							"raw": "{\n    \"registryID\" : \"62e28226ca8d7c4519f38c9c\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
