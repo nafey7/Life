@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"name\": \"Test User\",\n        \"emailAddress\": \"nafeymoiz@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"image\": \"user.png\",\n        \"eventID\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false,\n        \"registryName\": \"New Registry\"\n\n}",
+							"raw": "{\n        \"firstandLastName\": \"Test User\",\n        \"emailAddress\": \"nafeymoiz07@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"eventName\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,7 +77,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZiNDc3Y2U3NTNiNTMwYzI5ODA5ZSIsImlhdCI6MTY1OTg3NjQ3Mn0.u1s-H-sbxs5oHTrl25y6PcFR6Q0nDpy4cvCVvRZFeE8\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"

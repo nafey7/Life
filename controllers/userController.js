@@ -8,11 +8,10 @@ const Registry = require('../models/registryModel');
 exports.Signup = async (req,res,next) => {
     try{
         const query = User.create({
-            name: req.body.name,
+            firstandLastName: req.body.firstandLastName,
             emailAddress: req.body.emailAddress,
             password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'),
-            image: req.body.image,
-            eventID: req.body.eventID,
+            eventName: req.body.eventName,
             feeling: req.body.feeling,
             promotionalOffersAndUpdates: req.body.promotionalOffersAndUpdates
         });
@@ -20,13 +19,13 @@ exports.Signup = async (req,res,next) => {
         const Signup = await query;
 
         const userID = Signup._id;
-        const eventID = req.body.eventID;
+        const eventName = req.body.eventName;
 
         const secondQuery = Registry.create({
-            registryName: req.body.registryName,
+            registryName: 'Registry #1',
             userID: userID,
             link: 'none',
-            eventID: eventID,
+            eventID: eventName,
             private: true //by default private hoga at signup
         })
         const CreateRegistry = await secondQuery;

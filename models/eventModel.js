@@ -8,12 +8,10 @@ const eventSchema = new Schema({
     eventName: {
         type: String,
         unique: [true, 'Event Names should be unique'],
-        required: [true, 'Event Name is required']
     },
     eventImage: {
         type: String,
         unique: [true, 'Event Image should be unique'],
-        required: [true, 'Event Image is required']
     }
 },
  {
