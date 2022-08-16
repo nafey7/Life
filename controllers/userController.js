@@ -81,13 +81,25 @@ exports.VerifyEmail = async (req,res,next) => {
           const query = User.findOne({emailAddress: req.body.emailAddress});
           const data = await query;
 
-          const secondQuery = Registry.find({userID: data._id});
+          const secondQuery = Registry.findOne({userID: data._id}).select('registryName _id eventID private');;
           const secondData = await secondQuery;
 
-          const finalData = {user: data, registry: secondData};
+          let modifiedData = {
+            _id: data._id,
+            firstandLastName: data.firstandLastName,
+            emailAddress: data.emailAddress,
+            password: data.password,
+            image: data.image,
+            eventName: data.eventName,
+            feeling: data.feeling,
+            promotionalOffersAndUpdates: data.promotionalOffersAndUpdates,
+            registry: secondData
+        }
+
+        console.log(modifiedData);
+        const finalData = {user: modifiedData};
 
           const token = jwt.sign({id: data._id}, 'life-secret');
-
 
 
         //   const token = jwt.sign({id: data._id}, 'project-life');
