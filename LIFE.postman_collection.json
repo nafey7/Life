@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"firstandLastName\": \"Test User\",\n        \"emailAddress\": \"nafeymoiz07@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"eventName\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n}",
+							"raw": "{\n        \"firstandLastName\": \"Test User 13\",\n        \"emailAddress\": \"nafeymoiz007@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"eventName\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -106,7 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{  \n    \"registryName\": \"Test Registry 3\",\n    \"eventID\": \"Marriage\",\n    \"private\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTI4MTY0Y2E4ZDdjNDUxOWYzOGM5MSIsImlhdCI6MTY1OTAxMTU4Nn0.ZTwz9F_FR9OCjA0dKzE8bPLbtzi7nFgFLMaEG83LctM\"\n}",
+							"raw": "{  \n    \"registryName\": \"Test Registry 3\",\n    \"eventID\": \"Marriage\",\n    \"serviceID\": \"62fba5196349bb2caf84ba11\",\n    \"private\": true,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmJmNGVmMTRiNGI1MzExZDJiNzMyNSIsImlhdCI6MTY2MDY3OTQwN30.EaQigkhYI2BJBC8yn-8a5RlyaKnjajlRvTTtRGH7h4c\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -275,6 +275,64 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Add Service to Registry",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmJmNGVmMTRiNGI1MzExZDJiNzMyNSIsImlhdCI6MTY2MDY3OTQwN30.EaQigkhYI2BJBC8yn-8a5RlyaKnjajlRvTTtRGH7h4c\",\n    \"registryID\": \"62fbf4ef14b4b5311d2b7327\",\n    \"serviceID\": \"62fba47b6349bb2caf84ba0b\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/addservice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"addservice"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Service from Registry",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmJmNGVmMTRiNGI1MzExZDJiNzMyNSIsImlhdCI6MTY2MDY3OTQwN30.EaQigkhYI2BJBC8yn-8a5RlyaKnjajlRvTTtRGH7h4c\",\n    \"registryID\": \"62fbf4ef14b4b5311d2b7327\",\n    \"serviceID\": \"62fba47b6349bb2caf84ba0b\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/deleteservice",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"deleteservice"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -418,6 +476,72 @@
 							"port": "7000",
 							"path": [
 								"event"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SERVICE",
+			"item": [
+				{
+					"name": "Add Service",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            \"name\": \"Service 5\",\n            \"rating\": 4,\n            \"numberOfRatings\": 10,\n            \"remoteServices\": true,\n            \"onlineStatus\": true,\n            \"responseTime\": \"1 hour\",\n            \"location\": \"Russia\",\n            \"cost\": 50,\n            \"image\": \"default.png\"\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/service/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"service",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View List of Services",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/service/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"service",
+								""
 							]
 						}
 					},

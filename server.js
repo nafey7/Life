@@ -8,6 +8,7 @@ const cors = require('cors');
 const userRoute = require('./routes/userRoute');
 const eventRoute = require('./routes/eventRoute');
 const registryRoute = require('./routes/registryRoute');
+const serviceRoute = require('./routes/serviceRoute');
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use((req,res,next) => {
 app.use('/user', userRoute);
 app.use('/event', eventRoute);
 app.use('/registry', registryRoute);
+app.use('/service', serviceRoute);
 
 
 const port = process.env.PORT;

@@ -93,11 +93,11 @@ exports.VerifyEmail = async (req,res,next) => {
             eventName: data.eventName,
             feeling: data.feeling,
             promotionalOffersAndUpdates: data.promotionalOffersAndUpdates,
-            registry: secondData
+            userRegistry: secondData
         }
 
         console.log(modifiedData);
-        const finalData = {user: modifiedData};
+        const finalData = {user: modifiedData, registry: secondData};
 
           const token = jwt.sign({id: data._id}, 'life-secret');
 
@@ -211,6 +211,11 @@ exports.AddRegistry = async (req,res) => {
         const secondQuery = Registry.updateOne(filter, update, {new: true, runValidators: true});
         const updateRegistry = await secondQuery;
 
+        if (req.body.serviceID){
+            const thirdQuery = Registry.updateOne(filter, {$push: {service: req.body.serviceID}});
+            const serviceAdded = await thirdQuery;
+        }
+
 
         res.status(201).json({status: '201', message: 'success', data: updateRegistry});
     }
@@ -269,5 +274,38 @@ exports.GenerateLink = async (req,res) => {
     catch(err){
         console.log(err);
         res.status(404).json({status: '404', message: 'fail', data: err.message});
+    }
+}
+
+
+// User can add a service to the registry
+
+exports.AddServiceToRegistry = async(req,res) => {
+    try{
+        const filter = {_id: req.body.registryID}
+        const query = Registry.updateOne(filter, {$push: {service: req.body.serviceID}});
+        const updatedData = await query;
+
+        res.status(200).json({status: '200', message: 'success', data: updatedData});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail'});
+    }
+}
+
+// User can remove a service from the registry
+
+exports.DeleteServiceFromRegistry = async(req,res) => {
+    try{
+        const filter = {_id: req.body.registryID}
+        const query = Registry.updateOne(filter, {$pull: {service: req.body.serviceID}});
+        const updatedData = await query;
+
+        res.status(200).json({status: '200', message: 'success', data: updatedData});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail'});
     }
 }

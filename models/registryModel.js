@@ -23,6 +23,10 @@ const registrySchema = new Schema({
     },
     private: {
         type: Boolean,
+    },
+    service: {
+        type : Array ,
+        "default" : [] 
     }
 },
  {

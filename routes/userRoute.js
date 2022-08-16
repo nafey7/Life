@@ -44,5 +44,15 @@ router
 .route('/registryPrivacy')
 .patch(protectController.Protect,controller.ChangePrivacy);
 
+// ADD SERVICE TO THE REGISTRY
+router
+.route('/addservice')
+.patch(protectController.Protect,controller.AddServiceToRegistry);
+
+// DELETE SERVICE FROM THE REGISTRY
+router
+.route('/deleteservice')
+.patch(protectController.Protect,controller.DeleteServiceFromRegistry)
+
 
 module.exports = router;
