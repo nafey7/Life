@@ -3,7 +3,7 @@ const pbkdf2 = require('pbkdf2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const Registry = require('../models/registryModel');
-
+const Service = require('../models/serviceModel');
 // USER SIGNUP
 exports.Signup = async (req,res,next) => {
     try{
@@ -124,7 +124,7 @@ exports.Login = async (req,res) => {
         
         // console.log('This is email', req.body.emailAddress, 'and this is password', pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'));
 
-        const query = User.findOne({emailAddress: req.body.emailAddress, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')});
+        const query = User.findOne({emailAddress: req.body.emailAddress, password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512')}).select('-createdAt -updatedAt -__v');
         const FindUser = await query;
 
         if (!FindUser){
@@ -132,11 +132,46 @@ exports.Login = async (req,res) => {
         }
         const token = jwt.sign({id: FindUser._id}, 'life-secret');
 
-        res.status(200).json({status: 'success', token: token, message: FindUser});
+        const querySecond = Registry.find({userID: FindUser._id}).select('-createdAt -updatedAt -__v -link -creationDate -userID');
+        // this is the array of registries
+        const listRegistries = await querySecond;
+
+        let serviceList;
+        let queryThird, serviceData;
+        let modifiedData = [];
+        let obj;
+        let serviceArray;
+
+        for (let i=0;i<listRegistries.length;i++){
+            obj = {};
+            servicesArray = [];
+            obj['_id'] = listRegistries[i]._id;
+            obj['registryName'] = listRegistries[i].registryName;
+            obj['eventID'] = listRegistries[i].eventID;
+            obj['private'] = listRegistries[i].private;
+            obj['_id'] = listRegistries[i]._id;
+            // this is the array of service IDs
+            serviceList = listRegistries[i].service;
+            // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
+            if (serviceList.length > 0){
+
+                for (let j=0;j<serviceList.length;j++){
+                    queryThird = Service.findOne({_id: serviceList[j]}).select('-createdAt -updatedAt -__v');
+                    serviceData = await queryThird;
+                    // console.log(`For service with id ${serviceList[j]}, this is the data`, serviceData);
+                    servicesArray.push(serviceData);
+                }
+                
+            }
+            obj['services'] = servicesArray;
+            modifiedData.push(obj);
+        }
+
+        res.status(200).json({status: '200', message: 'success', token: token, data: {user: FindUser, registries: modifiedData}});
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: 'fail', message: err.message})
+        res.status(404).json({status: '404', message: 'fail'});
     }
 }
 

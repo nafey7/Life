@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"emailAddress\": \"nafeymoiz@gmail.com\",\n    \"password\": \"abcd1234\"\n}",
+							"raw": "{\n    \"emailAddress\": \"nafeymoiz007@gmail.com\",\n    \"password\": \"abcd1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
