@@ -8,6 +8,7 @@
     "morgan": "^1.10.0",
     "nodemailer": "^6.7.7",
     "pbkdf2": "^3.1.2",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "xoauth2": "^1.2.0"
   }
 }

@@ -29,6 +29,9 @@ const serviceSchema = new Schema({
     },
     image: {
         type: String
+    },
+    comment: {
+        type: String
     }
 },
  {

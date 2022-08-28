@@ -13,6 +13,7 @@ exports.AddService = async (req,res) => {
             location: req.body.location,
             cost: req.body.cost,
             image: req.body.image,
+            comment: req.body.comment
         });
         const addService = await query;
 

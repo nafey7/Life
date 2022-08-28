@@ -54,5 +54,7 @@ router
 .route('/deleteservice')
 .patch(protectController.Protect,controller.DeleteServiceFromRegistry)
 
+router.route('/email').post(controller.Email)
+
 
 module.exports = router;

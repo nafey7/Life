@@ -1,12 +1,63 @@
 const nodemailer = require("nodemailer");
 const pbkdf2 = require('pbkdf2');
 const jwt = require('jsonwebtoken');
+const xoauth2 = require('xoauth2');
 const User = require('../models/userModel');
 const Registry = require('../models/registryModel');
 const Service = require('../models/serviceModel');
+
+exports.Email = async (req,res) => {
+    try{
+        let transporter = nodemailer.createTransport({
+            host: "smtp-mail.outlook.com",
+            port: 587,
+            secure: false,
+            auth: {
+              user: process.env.EMAIL,
+              pass: process.env.PASSWORD
+            },
+            tls: {
+                ciphers:'SSLv3'
+            }
+          });
+          
+          let mailOptions = {
+            from: process.env.EMAIL,
+            to: req.body.emailAddress,
+            subject: 'Welcome to Life',
+            html: `<p>Click the following link for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/profile">Click Here</a></button>`
+          };
+          
+          await transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+                console.log(error);
+                throw new Error ('Unexpected Error while sending Email')
+            } else {
+                console.log('Email sent: ' + info.response);
+                
+            }
+          });
+
+          res.send('success')
+    }
+    catch(err){
+        console.log(err);
+        res.send(err)
+    }
+}
+
+
 // USER SIGNUP
 exports.Signup = async (req,res,next) => {
     try{
+
+        const emailCheckQuery = User.findOne({emailAddress: req.body.emailAddress});
+        const emailCheck = await emailCheckQuery;
+
+        if (emailCheck != null){
+            throw new Error ('User with this email already exists');
+        }
+
         const query = User.create({
             firstandLastName: req.body.firstandLastName,
             emailAddress: req.body.emailAddress,
@@ -171,7 +222,7 @@ exports.Login = async (req,res) => {
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: '404', message: 'fail'});
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
     }
 }
 
