@@ -6,45 +6,51 @@ const User = require('../models/userModel');
 const Registry = require('../models/registryModel');
 const Service = require('../models/serviceModel');
 
-exports.Email = async (req,res) => {
-    try{
-        let transporter = nodemailer.createTransport({
-            host: "smtp-mail.outlook.com",
-            port: 587,
-            secure: false,
-            auth: {
-              user: process.env.EMAIL,
-              pass: process.env.PASSWORD
-            },
-            tls: {
-                ciphers:'SSLv3'
-            }
-          });
+// exports.Email = async (req,res) => {
+//     try{
+//         let transporter = nodemailer.createTransport({
+//             host: "smtp-mail.outlook.com",
+//             port: 587,
+//             secure: false,
+//             auth: {
+//               user: process.env.EMAIL,
+//               pass: process.env.PASSWORD
+//             },
+//             tls: {
+//                 ciphers:'SSLv3'
+//             }
+//           });
+//           transporter.verify(function (error, success) {
+//             if (error) {
+//               console.log(error);
+//             } else {
+//               console.log("Server is ready to take our messages");
+//             }
+//           });
+//           let mailOptions = {
+//             from: process.env.EMAIL,
+//             to: req.body.emailAddress,
+//             subject: 'Welcome to Life',
+//             html: `<p>Click the following link for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/profile">Click Here</a></button>`
+//           };
           
-          let mailOptions = {
-            from: process.env.EMAIL,
-            to: req.body.emailAddress,
-            subject: 'Welcome to Life',
-            html: `<p>Click the following link for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/profile">Click Here</a></button>`
-          };
-          
-          await transporter.sendMail(mailOptions, function(error, info){
-            if (error) {
-                console.log(error);
-                throw new Error ('Unexpected Error while sending Email')
-            } else {
-                console.log('Email sent: ' + info.response);
+//           await transporter.sendMail(mailOptions, function(error, info){
+//             if (error) {
+//                 console.log(error);
+//                 throw new Error ('Unexpected Error while sending Email')
+//             } else {
+//                 console.log('Email sent: ' + info.response);
                 
-            }
-          });
+//             }
+//           });
 
-          res.send('success')
-    }
-    catch(err){
-        console.log(err);
-        res.send(err)
-    }
-}
+//           res.send('success')
+//     }
+//     catch(err){
+//         console.log(err);
+//         res.send(err)
+//     }
+// }
 
 
 // USER SIGNUP
@@ -105,13 +111,24 @@ exports.VerifyEmail = async (req,res,next) => {
     try{
         
         let transporter = nodemailer.createTransport({
-            service: 'hotmail',
+            host: "smtp-mail.outlook.com",
+            port: 587,
+            secure: false,
             auth: {
               user: process.env.EMAIL,
               pass: process.env.PASSWORD
+            },
+            tls: {
+                ciphers:'SSLv3'
             }
           });
-          
+          transporter.verify(function (error, success) {
+            if (error) {
+              console.log(error);
+            } else {
+              console.log("Server is ready to take our messages");
+            }
+          });
           let mailOptions = {
             from: process.env.EMAIL,
             to: req.body.emailAddress,
