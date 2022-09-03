@@ -31,6 +31,26 @@ const userSchema = new Schema({
     },
     promotionalOffersAndUpdates: {
         type: Boolean
+    },
+    phoneNumber: {
+        type: String,
+        default: ''
+    },
+    address: {
+        type: String,
+        default: ''
+    },
+    city: {
+        type: String,
+        default: ''
+    },
+    state: {
+        type: String,
+        default: ''
+    },
+    zipCode: {
+        type: String,
+        default: ''
     }
 },
  {

@@ -16,6 +16,11 @@ router
 .route('/login')
 .post(controller.Login);
 
+// ACCOUNT SETTINGS
+router
+.route('/accountsettings')
+.post(protectController.Protect, controller.AccountSettings);
+
 // CHANGE PROFILE IMAGE
 router
 .route('/changeImage')

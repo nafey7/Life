@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"firstandLastName\": \"Test User 13\",\n        \"emailAddress\": \"nafeymoiz007@gmail.com\",\n        \"password\": \"abcd1234\",\n        \"eventName\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n}",
+							"raw": "{\n        \"firstandLastName\": \"Test User justtt\",\n        \"emailAddress\": \"munelandproject@outlook.com\",\n        \"password\": \"abcd1234\",\n        \"eventName\": \"Loss of Income\",\n        \"feeling\": \"Just exploring\",\n        \"promotionalOffersAndUpdates\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"emailAddress\": \"nafeymoiz007@gmail.com\",\n    \"password\": \"abcd1234\"\n}",
+							"raw": "{\n    \"emailAddress\": \"nafeymoizqwerty@gmail.com\",\n    \"password\": \"abcd12345\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -68,6 +68,35 @@
 					"response": []
 				},
 				{
+					"name": "Account Settings",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\": \"nafeymoizqwerty1@gmail.com\",\n    \"firstandLastName\": \"Account 333\",\n    \"phoneNumber\": \"74747474\",\n    \"zipCode\": \"1233\",\n    \"city\": \"lawhore\",\n    \"password\": \"abcd12345\",\n    \"reEnterPassword\": \"abcd12345\",\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzMTNjMWRiODUxYWU3ZTM3NDY2NjNjMSIsImlhdCI6MTY2MjIzOTE5Nn0.dX5bphxUGSDRCuAhjkCofonO0Er0uH0vsJCgx1JOdeY\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:7000/user/accountsettings",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "7000",
+							"path": [
+								"user",
+								"accountsettings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "View User's Registries",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -77,7 +106,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZWZiNDc3Y2U3NTNiNTMwYzI5ODA5ZSIsImlhdCI6MTY1OTg3NjQ3Mn0.u1s-H-sbxs5oHTrl25y6PcFR6Q0nDpy4cvCVvRZFeE8\"\n}",
+							"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZTY1MDQzNzRhMGQ3ZTE3YzA5M2ZhOCIsImlhdCI6MTY2MTk1NDI1MX0.cK2DsGHwC1RFPCJZHLo5uzc894P7lVU_ora6HA1z2_8\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -493,7 +522,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n            \"name\": \"Service 5\",\n            \"rating\": 4,\n            \"numberOfRatings\": 10,\n            \"remoteServices\": true,\n            \"onlineStatus\": true,\n            \"responseTime\": \"1 hour\",\n            \"location\": \"Russia\",\n            \"cost\": 50,\n            \"image\": \"default.png\"\n        }",
+							"raw": "{\n            \"name\": \"Service 06\",\n            \"rating\": 2,\n            \"numberOfRatings\": 43,\n            \"remoteServices\": true,\n            \"onlineStatus\": true,\n            \"responseTime\": \"2 hours\",\n            \"location\": \"China\",\n            \"cost\": 10,\n            \"image\": \"default.png\",\n            \"comment\": \"These are the default comments for each service present in this application\"\n        }",
 							"options": {
 								"raw": {
 									"language": "json"

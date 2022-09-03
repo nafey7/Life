@@ -6,52 +6,6 @@ const User = require('../models/userModel');
 const Registry = require('../models/registryModel');
 const Service = require('../models/serviceModel');
 
-// exports.Email = async (req,res) => {
-//     try{
-//         let transporter = nodemailer.createTransport({
-//             host: "smtp-mail.outlook.com",
-//             port: 587,
-//             secure: false,
-//             auth: {
-//               user: process.env.EMAIL,
-//               pass: process.env.PASSWORD
-//             },
-//             tls: {
-//                 ciphers:'SSLv3'
-//             }
-//           });
-//           transporter.verify(function (error, success) {
-//             if (error) {
-//               console.log(error);
-//             } else {
-//               console.log("Server is ready to take our messages");
-//             }
-//           });
-//           let mailOptions = {
-//             from: process.env.EMAIL,
-//             to: req.body.emailAddress,
-//             subject: 'Welcome to Life',
-//             html: `<p>Click the following link for successful sign-up</p> <button><a href="https://famous-dieffenbachia-243151.netlify.app/profile">Click Here</a></button>`
-//           };
-          
-//           await transporter.sendMail(mailOptions, function(error, info){
-//             if (error) {
-//                 console.log(error);
-//                 throw new Error ('Unexpected Error while sending Email')
-//             } else {
-//                 console.log('Email sent: ' + info.response);
-                
-//             }
-//           });
-
-//           res.send('success')
-//     }
-//     catch(err){
-//         console.log(err);
-//         res.send(err)
-//     }
-// }
-
 
 // USER SIGNUP
 exports.Signup = async (req,res,next) => {
@@ -236,6 +190,69 @@ exports.Login = async (req,res) => {
         }
 
         res.status(200).json({status: '200', message: 'success', token: token, data: {user: FindUser, registries: modifiedData}});
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
+    }
+}
+
+// USER CAN CHANGE ACCOUNT SETTINGS
+exports.AccountSettings = async (req,res) => {
+    try{
+
+        // console.log(checkEmail);
+        // throw new Error('wait API check')
+        
+        let update = {};
+        const filter = {_id: req.body.userID};
+
+        if (req.body.emailAddress){
+            const checkQuery = User.findOne({emailAddress: req.body.emailAddress});
+            const checkEmail = await checkQuery;
+
+            if (checkEmail == null){
+                update.emailAddress = req.body.emailAddress;
+            }
+            else{
+                throw new Error ('This email is already in use');
+            }
+        }
+        if (req.body.password){
+            if (req.body.password != req.body.reEnterPassword){
+                throw new Error("Passwords do not match");
+            }
+            else{
+                update.password = pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512');
+            }
+        }
+
+        if (req.body.firstandLastName){
+            update.firstandLastName = req.body.firstandLastName;
+        }
+        if (req.body.phoneNumber){
+            update.phoneNumber = req.body.phoneNumber;
+        }
+        if (req.body.address){
+            update.address = req.body.address;
+        }
+        if (req.body.city){
+            update.city = req.body.city;
+        }
+        if (req.body.state){
+            update.state = req.body.state;
+        }
+        if (req.body.zipCode){
+            update.zipCode = req.body.zipCode;
+        }
+        if (req.body.image){
+            update.image = req.body.image;
+        }
+
+        const query = User.updateOne(filter, update, {new: true, runValidators: true});
+        const updateInfo = await query;
+
+        res.status(200).json({status: '200', message: 'success'})
     }
     catch(err){
         console.log(err);
