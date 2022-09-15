@@ -27,6 +27,10 @@ const registrySchema = new Schema({
     service: {
         type : Array ,
         "default" : [] 
+    },
+    image: {
+        type: String,
+        default: ""
     }
 },
  {

@@ -180,6 +180,7 @@ exports.Login = async (req,res) => {
                 for (let j=0;j<serviceList.length;j++){
                     queryThird = Service.findOne({_id: serviceList[j]}).select('-createdAt -updatedAt -__v');
                     serviceData = await queryThird;
+                    // console.log(serviceData);
                     // console.log(`For service with id ${serviceList[j]}, this is the data`, serviceData);
                     servicesArray.push(serviceData);
                 }
@@ -441,7 +442,43 @@ exports.AddServiceToRegistry = async(req,res) => {
         const query = Registry.updateOne(filter, {$push: {service: req.body.serviceID}});
         const updatedData = await query;
 
-        res.status(200).json({status: '200', message: 'success', data: updatedData});
+
+        const querySecond = Registry.find({userID: req.body.userID}).select('-createdAt -updatedAt -__v -link -creationDate -userID');
+        // this is the array of registries
+        const listRegistries = await querySecond;
+
+        let serviceList;
+        let queryThird, serviceData;
+        let modifiedData = [];
+        let obj;
+        let serviceArray;
+
+        for (let i=0;i<listRegistries.length;i++){
+            obj = {};
+            servicesArray = [];
+            obj['_id'] = listRegistries[i]._id;
+            obj['registryName'] = listRegistries[i].registryName;
+            obj['eventID'] = listRegistries[i].eventID;
+            obj['private'] = listRegistries[i].private;
+            obj['_id'] = listRegistries[i]._id;
+            // this is the array of service IDs
+            serviceList = listRegistries[i].service;
+            // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
+            if (serviceList.length > 0){
+
+                for (let j=0;j<serviceList.length;j++){
+                    queryThird = Service.findOne({_id: serviceList[j]}).select('-createdAt -updatedAt -__v');
+                    serviceData = await queryThird;
+                    // console.log(`For service with id ${serviceList[j]}, this is the data`, serviceData);
+                    servicesArray.push(serviceData);
+                }
+                
+            }
+            obj['services'] = servicesArray;
+            modifiedData.push(obj);
+        }
+
+        res.status(200).json({status: '200', message: 'success', data: modifiedData});
     }
     catch(err){
         console.log(err);
