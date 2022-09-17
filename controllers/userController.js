@@ -19,7 +19,8 @@ exports.Signup = async (req,res,next) => {
         }
 
         const query = User.create({
-            firstandLastName: req.body.firstandLastName,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             emailAddress: req.body.emailAddress,
             password: pbkdf2.pbkdf2Sync(req.body.password, 'life-secret', 1, 32, 'sha512'),
             eventName: req.body.eventName,
@@ -108,7 +109,8 @@ exports.VerifyEmail = async (req,res,next) => {
 
           let modifiedData = {
             _id: data._id,
-            firstandLastName: data.firstandLastName,
+            firstName: data.firstName,
+            lastName: data.lastName,
             emailAddress: data.emailAddress,
             password: data.password,
             image: data.image,
@@ -228,8 +230,11 @@ exports.AccountSettings = async (req,res) => {
             }
         }
 
-        if (req.body.firstandLastName){
-            update.firstandLastName = req.body.firstandLastName;
+        if (req.body.firstName){
+            update.firstName= req.body.firstName;
+        }
+        if (req.body.lastName){
+            update.lastName = req.body.lastName;
         }
         if (req.body.phoneNumber){
             update.phoneNumber = req.body.phoneNumber;
@@ -438,6 +443,17 @@ exports.GenerateLink = async (req,res) => {
 
 exports.AddServiceToRegistry = async(req,res) => {
     try{
+
+        const queryCheck = Registry.findOne({_id: req.body.registryID});
+        const check = await queryCheck;
+
+        let sudoArr = check.service;
+
+        if (sudoArr.includes(req.body.serviceID) == true){
+            throw new Error ("This service already exists in the registry");
+        }
+
+
         const filter = {_id: req.body.registryID}
         const query = Registry.updateOne(filter, {$push: {service: req.body.serviceID}});
         const updatedData = await query;
@@ -482,7 +498,7 @@ exports.AddServiceToRegistry = async(req,res) => {
     }
     catch(err){
         console.log(err);
-        res.status(404).json({status: '404', message: 'fail'});
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
     }
 }
 

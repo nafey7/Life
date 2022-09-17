@@ -5,7 +5,11 @@ const validator = require('validator');
 
 
 const userSchema = new Schema({
-    firstandLastName: {
+
+    firstName: {
+        type: String
+    },
+    lastName: {
         type: String
     },
     emailAddress: {
