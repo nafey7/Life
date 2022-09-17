@@ -173,7 +173,7 @@ exports.Login = async (req,res) => {
             obj['registryName'] = listRegistries[i].registryName;
             obj['eventID'] = listRegistries[i].eventID;
             obj['private'] = listRegistries[i].private;
-            obj['_id'] = listRegistries[i]._id;
+            obj['image'] = listRegistries[i].image;
             // this is the array of service IDs
             serviceList = listRegistries[i].service;
             // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
@@ -266,23 +266,6 @@ exports.AccountSettings = async (req,res) => {
     }
 }
 
-// USER CAN CHANGE PROFILE IMAGE
-exports.ChangeProfileImage = async (req,res) => {
-    try{
-        const update = {image: req.body.image};
-        const filter = {_id: req.body.userID};
-
-        const query = User.updateMany(filter, update, {new: true, runValidators: true});
-        const changeImage = await query;
-        res.status(200).json({status: '200', message: 'success', data: changeImage});
-
-    }
-    catch(err){
-        console.log(err);
-        res.status(404).json({status: '404', message: 'fail', data: err.message});
-    }
-}
-
 
 // REGISTRIES (related to the user)
 
@@ -325,7 +308,8 @@ exports.AddRegistry = async (req,res) => {
             userID:req.body.userID,
             eventID: req.body.eventID,
             link: 'none',
-            private: true
+            private: true,
+            image: req.body.image
         });
 
         const addRegistry = await query;
@@ -342,13 +326,117 @@ exports.AddRegistry = async (req,res) => {
             const serviceAdded = await thirdQuery;
         }
 
+        const queryFourth = Registry.find({userID: req.body.userID}).select('-createdAt -updatedAt -__v -link -creationDate -userID');
+        // this is the array of registries
+        const listRegistries = await queryFourth;
 
-        res.status(201).json({status: '201', message: 'success', data: updateRegistry});
+        let serviceList;
+        let queryThird, serviceData;
+        let modifiedData = [];
+        let obj;
+        let serviceArray;
+
+        for (let i=0;i<listRegistries.length;i++){
+            obj = {};
+            servicesArray = [];
+            obj['_id'] = listRegistries[i]._id;
+            obj['registryName'] = listRegistries[i].registryName;
+            obj['eventID'] = listRegistries[i].eventID;
+            obj['image'] = listRegistries[i].image;
+            obj['private'] = listRegistries[i].private;
+
+            // this is the array of service IDs
+            serviceList = listRegistries[i].service;
+            // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
+            if (serviceList.length > 0){
+
+                for (let j=0;j<serviceList.length;j++){
+                    queryThird = Service.findOne({_id: serviceList[j]}).select('-createdAt -updatedAt -__v');
+                    serviceData = await queryThird;
+                    // console.log(`For service with id ${serviceList[j]}, this is the data`, serviceData);
+                    servicesArray.push(serviceData);
+                }
+                
+            }
+            obj['services'] = servicesArray;
+            modifiedData.push(obj);
+        }
+
+        res.status(200).json({status: '200', message: 'success', data: modifiedData});
+
     }
     catch(err){
         console.log(err);
         res.status(404).json({status: '404', message: 'fail', data: err.message});
 
+    }
+}
+
+// User will edit the registry
+exports.EditRegistry = async (req,res) => {
+    try{
+        let update = {};
+        let filter = {_id: req.body.registryID};
+
+        if (req.body.registryName){
+            update.registryName = req.body.registryName;
+        }
+        if (req.body.eventID){
+            update.eventID = req.body.eventID;
+        }
+        if (req.body.private){
+            update.private = req.body.private;
+        }
+        if (req.body.image){
+            update.image = req.body.image;
+        }
+
+        const query = Registry.updateOne(filter, update, {new: true, runValidators: true});
+        const editRegistry = await query;
+
+
+        const querySecond = Registry.find({userID: req.body.userID}).select('-createdAt -updatedAt -__v -link -creationDate -userID');
+        // this is the array of registries
+        const listRegistries = await querySecond;
+
+        let serviceList;
+        let queryThird, serviceData;
+        let modifiedData = [];
+        let obj;
+        let serviceArray;
+
+        for (let i=0;i<listRegistries.length;i++){
+            obj = {};
+            servicesArray = [];
+            obj['_id'] = listRegistries[i]._id;
+            obj['registryName'] = listRegistries[i].registryName;
+            obj['eventID'] = listRegistries[i].eventID;
+            obj['image'] = listRegistries[i].image;
+            obj['private'] = listRegistries[i].private;
+            // this is the array of service IDs
+            serviceList = listRegistries[i].service;
+            // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
+            if (serviceList.length > 0){
+
+                for (let j=0;j<serviceList.length;j++){
+                    queryThird = Service.findOne({_id: serviceList[j]}).select('-createdAt -updatedAt -__v');
+                    serviceData = await queryThird;
+                    // console.log(`For service with id ${serviceList[j]}, this is the data`, serviceData);
+                    servicesArray.push(serviceData);
+                }
+                
+            }
+            obj['services'] = servicesArray;
+            modifiedData.push(obj);
+        }
+
+        res.status(200).json({status: '200', message: 'success', data: modifiedData});
+
+
+    }
+    catch(err){
+        console.log(err);
+        res.status(404).json({status: '404', message: 'fail', data: err.message});
     }
 }
 
@@ -375,7 +463,7 @@ exports.DeleteRegistry = async(req,res) => {
             obj['registryName'] = listRegistries[i].registryName;
             obj['eventID'] = listRegistries[i].eventID;
             obj['private'] = listRegistries[i].private;
-            obj['_id'] = listRegistries[i]._id;
+            obj['image'] = listRegistries[i].image;
             // this is the array of service IDs
             serviceList = listRegistries[i].service;
             // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
@@ -398,23 +486,6 @@ exports.DeleteRegistry = async(req,res) => {
     catch(err){
         console.log(err);
         res.status(404).json({status: '404', message: 'fail'});
-    }
-}
-
-// User will edit privacy status of the registry
-exports.ChangePrivacy = async (req,res) => {
-    try{
-        const filter = {_id: req.body.registryID};
-        const update = {private: req.body.private};
-
-        const query = Registry.updateMany(filter, update, {new: true, runValidators: true});
-        const changePrivacy = await query;
-        res.status(200).json({status: '200', message: 'success', data: changePrivacy});
-
-    }
-    catch(err){
-        console.log(err);
-        res.status(404).json({status: '404', message: 'fail', data: err.message});
     }
 }
 
@@ -476,7 +547,7 @@ exports.AddServiceToRegistry = async(req,res) => {
             obj['registryName'] = listRegistries[i].registryName;
             obj['eventID'] = listRegistries[i].eventID;
             obj['private'] = listRegistries[i].private;
-            obj['_id'] = listRegistries[i]._id;
+            obj['image'] = listRegistries[i].image;
             // this is the array of service IDs
             serviceList = listRegistries[i].service;
             // console.log(`This is the list of services for registry number ${i+1}`, serviceList);
@@ -527,7 +598,7 @@ exports.DeleteServiceFromRegistry = async(req,res) => {
             obj['registryName'] = listRegistries[i].registryName;
             obj['eventID'] = listRegistries[i].eventID;
             obj['private'] = listRegistries[i].private;
-            obj['_id'] = listRegistries[i]._id;
+            obj['image'] = listRegistries[i].image;
             // this is the array of service IDs
             serviceList = listRegistries[i].service;
             // console.log(`This is the list of services for registry number ${i+1}`, serviceList);

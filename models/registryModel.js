@@ -29,8 +29,7 @@ const registrySchema = new Schema({
         "default" : [] 
     },
     image: {
-        type: String,
-        default: ""
+        type: String
     }
 },
  {

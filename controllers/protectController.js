@@ -24,8 +24,6 @@ exports.Protect = async (req,res, next) => {
         req.body.userID = userID;
 
         next();
-        // res.status(200).json({status: '200', message: 'success'});
-
 
 
     }

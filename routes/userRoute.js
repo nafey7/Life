@@ -21,16 +21,12 @@ router
 .route('/accountsettings')
 .post(protectController.Protect, controller.AccountSettings);
 
-// CHANGE PROFILE IMAGE
-router
-.route('/changeImage')
-.patch(protectController.Protect,controller.ChangeProfileImage);
 
-
-// VIEW & ADD & DELETE REGISTRY
+// VIEW & EDIT & ADD & DELETE REGISTRY
 router
 .route('/registries')
 .get(protectController.Protect,controller.ViewRegistries)
+.patch(protectController.Protect, controller.EditRegistry)
 .post(protectController.Protect,controller.AddRegistry)
 .delete(protectController.Protect,controller.DeleteRegistry);
 
@@ -43,11 +39,6 @@ router
 router
 .route('/registryLink')
 .post(protectController.Protect,controller.GenerateLink);
-
-// CHANGE PRIVACY OF REGISTRY
-router
-.route('/registryPrivacy')
-.patch(protectController.Protect,controller.ChangePrivacy);
 
 // ADD SERVICE TO THE REGISTRY
 router
