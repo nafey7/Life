@@ -12,11 +12,12 @@ const serviceRoute = require('./routes/serviceRoute');
 
 const app = express();
 
-const corsOptions = {
-    origin: ['https://life-fe.vercel.app', 'http://localhost:3000'],
-}
+// const corsOptions = {
+//     origin: ['https://life-fe.vercel.app', 'http://localhost:3000'],
+// }
 
-app.options('*', cors(corsOptions));
+// app.options('*', cors(corsOptions));
+
 // app.use(cors(corsOptions));
 
 mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -26,6 +27,18 @@ mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology:
 
 app.use(morgan('dev'));
 app.use(express.json());
+
+app.use((req, res, next) => {
+    const allowedOrigins = ['https://life-fe.vercel.app', 'http://localhost:3000'];
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+         res.setHeader('Access-Control-Allow-Origin', origin);
+    }
+    res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Credentials', true);
+    return next();
+  });
 
 app.use((req,res,next) => {
     let req_time = new Date().toISOString();
