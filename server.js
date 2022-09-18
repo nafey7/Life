@@ -13,7 +13,7 @@ const serviceRoute = require('./routes/serviceRoute');
 const app = express();
 
 const corsOptions = {
-    origin: ['https://life-fe.vercel.app/', 'http://localhost:3000'],
+    origin: ['https://life-fe.vercel.app', 'http://localhost:3000'],
 }
 
 app.options('*', cors(corsOptions));
