@@ -13,9 +13,11 @@ const serviceRoute = require('./routes/serviceRoute');
 const app = express();
 
 const corsOptions = {
-    origin: process.env.ORIGIN,
+    origin: 'http://localhost:3000',
 }
-app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions));
+// app.use(cors(corsOptions));
 
 mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("Sucessfully connected to Database"))
