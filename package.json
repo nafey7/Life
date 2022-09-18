@@ -13,5 +13,8 @@
     "pbkdf2": "^3.1.2",
     "validator": "^13.7.0",
     "xoauth2": "^1.2.0"
+  },
+  "engines": {
+    "node": "^18"
   }
 }
