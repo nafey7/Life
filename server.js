@@ -12,21 +12,13 @@ const serviceRoute = require('./routes/serviceRoute');
 
 const app = express();
 
-// const corsOptions = {
-//     origin: ['https://life-fe.vercel.app', 'http://localhost:3000'],
-// }
-
-// app.options('*', cors(corsOptions));
-
-// app.use(cors(corsOptions));
-
 mongoose.connect(process.env.dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then((result) => console.log("Sucessfully connected to Database"))
     .catch((err) => console.log(err));
 
 
 app.use(morgan('dev'));
-app.use(express.json());
+app.use(express.json({limit: '10mb'}));
 
 app.use((req, res, next) => {
     const allowedOrigins = ['https://life-fe.vercel.app', 'http://localhost:3000'];
