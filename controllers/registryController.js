@@ -40,7 +40,7 @@ exports.ViewPrivateRegistry = async (req,res) => {
     try{
         const registryID = req.body.registryID;
         
-        const query = Registry.findById(registryID).select('-_id registryName eventID');
+        const query = Registry.findById(registryID);
         const findPrivateRegistry = await query;
 
         res.status(200).json({status: '200', message: 'success', data: findPrivateRegistry});
