@@ -1,4 +1,5 @@
 const Registry = require('../models/registryModel');
+const User = require('../models/userModel');
 
 // View all public registries
 exports.ViewAllRegistries = async (req,res) => {
@@ -38,12 +39,23 @@ exports.SearchPublicRegistry = async (req,res) => {
 
 exports.ViewPrivateRegistry = async (req,res) => {
     try{
+
+        let finalObject = {};
         const registryID = req.body.registryID;
+        const userID = req.body.userID;
         
         const query = Registry.findById(registryID);
         const findPrivateRegistry = await query;
 
-        res.status(200).json({status: '200', message: 'success', data: findPrivateRegistry});
+        const querySecond = User.findById(userID);
+        const userData = await querySecond;
+
+        finalObject.user = userData;
+        finalObject.registry = findPrivateRegistry;
+
+
+
+        res.status(200).json({status: '200', message: 'success', data: finalObject});
     }
     catch(err){
         res.status(404).json({status: '404', message: 'fail', data: err.message});
