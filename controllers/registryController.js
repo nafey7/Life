@@ -1,5 +1,6 @@
 const Registry = require('../models/registryModel');
 const User = require('../models/userModel');
+const Service = require ('../models/serviceModel');
 
 // View all public registries
 exports.ViewAllRegistries = async (req,res) => {
@@ -41,17 +42,44 @@ exports.ViewPrivateRegistry = async (req,res) => {
     try{
 
         let finalObject = {};
+        let finalRegistry = {};
+        
         const registryID = req.body.registryID;
         const userID = req.body.userID;
         
         const query = Registry.findById(registryID);
         const findPrivateRegistry = await query;
 
+        let serviceArray = findPrivateRegistry.service;
+        let serviceInfo = [];
+        
+        finalRegistry._id = findPrivateRegistry._id;
+        finalRegistry.registryName = findPrivateRegistry.registryName;
+        finalRegistry.userID = findPrivateRegistry.userID;
+        finalRegistry.eventID = findPrivateRegistry.eventID;
+        finalRegistry.link = findPrivateRegistry.link;
+        finalRegistry.private = findPrivateRegistry.private;
+        finalRegistry.image = findPrivateRegistry.image;
+        finalRegistry.creationDate = findPrivateRegistry.creationDate;
+        finalRegistry.createdAt = findPrivateRegistry.createdAt;
+        finalRegistry.updatedAt = findPrivateRegistry.updatedAt;
+        
+
+        let queryService, findService
+        for (let i=0;i<serviceArray.length;i++){
+            queryService = Service.findOne({_id: serviceArray[i]});
+            findService = await queryService;
+
+            serviceInfo.push(findService);
+
+        }
+        finalRegistry.service = serviceInfo;
+
         const querySecond = User.findById(userID);
         const userData = await querySecond;
 
         finalObject.user = userData;
-        finalObject.registry = findPrivateRegistry;
+        finalObject.registry = finalRegistry;
 
 
 
