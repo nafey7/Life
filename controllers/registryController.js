@@ -81,8 +81,6 @@ exports.ViewPrivateRegistry = async (req,res) => {
         finalObject.user = userData;
         finalObject.registry = finalRegistry;
 
-
-
         res.status(200).json({status: '200', message: 'success', data: finalObject});
     }
     catch(err){
