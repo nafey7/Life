@@ -258,7 +258,10 @@ exports.AccountSettings = async (req,res) => {
         const query = User.updateOne(filter, update, {new: true, runValidators: true});
         const updateInfo = await query;
 
-        res.status(200).json({status: '200', message: 'success'})
+        const querySecond = User.findOne({_id: req.body.userID});
+        const userInfo = await querySecond;
+        
+        res.status(200).json({status: '200', message: 'success', data: userInfo});
     }
     catch(err){
         console.log(err);
